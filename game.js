@@ -1,22 +1,19 @@
 // game.js
 
-// Contador de madera
+// Contador de madera recolectada y objetos activos
 let woodCount = 0;
-
-// Contador de objetos visibles
-let visibleObjects = 0;
-
-// Límite máximo de objetos en pantalla
-const maxVisibleObjects = 10;
+let activeWoodPieces = 0; // Contador de trozos de madera en pantalla
 
 // Referencias al área de juego y contador
 const gameArea = document.getElementById("game-area");
 const woodCounter = document.getElementById("wood-count");
 
+// Límite de trozos de madera visibles
+const MAX_WOOD_PIECES = 10;
+
 // Función para generar trozos de madera
 function spawnWood() {
-  // Verificar si se puede generar más madera
-  if (visibleObjects >= maxVisibleObjects) return;
+  if (activeWoodPieces >= MAX_WOOD_PIECES) return; // No generar más si ya hay 10
 
   const woodPiece = document.createElement("div");
   woodPiece.classList.add("wood-piece");
@@ -28,34 +25,26 @@ function spawnWood() {
   woodPiece.style.left = `${x}px`;
   woodPiece.style.top = `${y}px`;
 
-  // Incrementar el contador de objetos visibles
-  visibleObjects++;
-
   // Agregar evento de clic para recolectar madera
   woodPiece.addEventListener("click", () => {
     woodCount++;
     woodCounter.textContent = woodCount;
-
-    // Reducir el contador de objetos visibles al recolectar
-    visibleObjects--;
-
-    // Eliminar la madera del área de juego
-    woodPiece.remove();
+    woodPiece.remove(); // Eliminar el trozo de madera
+    activeWoodPieces--; // Reducir el contador de trozos activos
   });
 
   // Agregar el trozo de madera al área de juego
   gameArea.appendChild(woodPiece);
+  activeWoodPieces++; // Incrementar el contador de trozos activos
 
   // Eliminar automáticamente después de 5 segundos si no se recoge
   setTimeout(() => {
     if (woodPiece.parentNode) {
       woodPiece.remove();
-
-      // Reducir el contador de objetos visibles al eliminar automáticamente
-      visibleObjects--;
+      activeWoodPieces--; // Reducir el contador si se elimina automáticamente
     }
   }, 5000);
 }
 
-// Generar madera cada segundo si no se ha alcanzado el límite
+// Generar madera cada segundo
 setInterval(spawnWood, 1000);
