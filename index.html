@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recolección de Recursos</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Factory Game</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <h1>Juego de Recolección de Madera</h1>
-  <p>Madera recolectada: <span id="wood-count">0</span></p>
-  
-  <div id="game-area">
-  </div>
+    <div id="principal-cont">
 
-  <script src="game.js"></script>
+        <div class="area factory-area">
+            <button class="rightNavButton navButton" onclick="movetoForest()"></button>
+        </div>
+
+        <div class="area forest-area">
+            <button class="leftNavButton navButton"  onclick="movetoFactory()"></button>
+        </div>
+
+    </div>
+
+    <script src="js/moveareas.js"></script>
 </body>
 </html>
